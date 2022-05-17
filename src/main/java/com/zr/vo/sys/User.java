@@ -4,6 +4,7 @@ import com.alibaba.fastjson.annotation.JSONField;
 import com.zr.vo.BaseVo;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 public class User extends BaseVo implements Serializable {
     private String userId;
@@ -25,6 +26,18 @@ public class User extends BaseVo implements Serializable {
     private Date modifyTime;
 
     private String imgUrl;
+
+    //用户拥有角色集合
+    private List<Role> roleList;
+
+
+    public List<Role> getRoleList() {
+        return roleList;
+    }
+
+    public void setRoleList(List<Role> roleList) {
+        this.roleList = roleList;
+    }
 
     public String getUserId() {
         return userId;

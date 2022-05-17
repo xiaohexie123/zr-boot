@@ -1,5 +1,7 @@
 package com.zr.vo.sys;
 
+import com.alibaba.fastjson.annotation.JSONField;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.github.pagehelper.PageHelper;
 import com.zr.vo.BaseVo;
 
@@ -14,10 +16,13 @@ public class Role extends BaseVo {
 
     private String createId;
 
+    @JSONField(format="yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
     private String modifyId;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JSONField(format="yyyy-MM-dd HH:mm:ss")
     private Date modifyTime;
 
     public Long getId() {
