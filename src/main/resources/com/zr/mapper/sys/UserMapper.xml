@@ -25,19 +25,19 @@
     <select id="login" resultMap="BaseResultMap">
       select * from  sys_user where user_id = #{userId} and password = #{password} and status = 1
     </select>
-    <select id="list" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from sys_user
-        <where>
-            <if test="userId != null and userId != '' ">
-                and user_id like '%${userId}%'
-            </if>
-            <if test="userName != null and userName != '' ">
-                and user_name like '%${userName}%'
-            </if>
-        </where>
-    </select>
+<!--    <select id="list" resultMap="BaseResultMap">-->
+<!--        select-->
+<!--        <include refid="Base_Column_List"/>-->
+<!--        from sys_user-->
+<!--        <where>-->
+<!--            <if test="userId != null and userId != '' ">-->
+<!--                and user_id like '%${userId}%'-->
+<!--            </if>-->
+<!--            <if test="userName != null and userName != '' ">-->
+<!--                and user_name like '%${userName}%'-->
+<!--            </if>-->
+<!--        </where>-->
+<!--    </select>-->
     <select id="selectAuthUrlsList" resultType="java.lang.String">
     SELECT
 	sys_auth.url
@@ -164,4 +164,31 @@
       img_url = #{imgUrl,jdbcType=VARCHAR}
     where user_id = #{userId,jdbcType=VARCHAR}
   </update>
+
+    <resultMap id="RsResultMap" type="com.zr.vo.sys.User">
+        <id column="user_id" jdbcType="VARCHAR" property="userId"/>
+        <result column="user_name" jdbcType="VARCHAR" property="userName"/>
+        <result column="password" jdbcType="CHAR" property="password"/>
+        <result column="status" jdbcType="CHAR" property="status"/>
+        <result column="create_id" jdbcType="VARCHAR" property="createId"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="modify_id" jdbcType="VARCHAR" property="modifyId"/>
+        <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime"/>
+        <result column="img_url" jdbcType="VARCHAR" property="imgUrl"/>
+        <collection property="roleList" ofType="com.zr.vo.sys.Role" column="user_id" select="com.zr.mapper.sys.RoleMapper.listByUserId"></collection>
+    </resultMap>
+
+        <select id="list" resultMap="RsResultMap">
+            select
+            <include refid="Base_Column_List"/>
+            from sys_user
+            <where>
+                <if test="userId != null and userId != '' ">
+                    and user_id like '%${userId}%'
+                </if>
+                <if test="userName != null and userName != '' ">
+                    and user_name like '%${userName}%'
+                </if>
+            </where>
+        </select>
 </mapper>

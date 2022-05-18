@@ -1,5 +1,8 @@
 package com.zr.vo.sys;
 
+import org.apache.ibatis.annotations.Mapper;
+
+
 public class userRole {
     private String userId;
 

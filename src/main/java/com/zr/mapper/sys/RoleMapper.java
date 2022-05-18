@@ -22,4 +22,7 @@ public interface RoleMapper {
     List<Role> list(Role role);
 
     List<Role> listByUserId(String userId);
+
+
+    List<Role> selectList();
 }

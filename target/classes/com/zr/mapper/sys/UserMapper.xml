@@ -178,18 +178,17 @@
         <collection property="roleList" ofType="com.zr.vo.sys.Role" column="user_id" select="com.zr.mapper.sys.RoleMapper.listByUserId"></collection>
     </resultMap>
 
-    <select id="list" resultMap="RsResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from sys_user
-        <where>
-            <if test="userId != null and userId != '' ">
-                and user_id like '%${userId}%'
-            </if>
-            <if test="userName != null and userName != '' ">
-                and user_name like '%${userName}%'
-            </if>
-        </where>
-    </select>
-
+        <select id="list" resultMap="RsResultMap">
+            select
+            <include refid="Base_Column_List"/>
+            from sys_user
+            <where>
+                <if test="userId != null and userId != '' ">
+                    and user_id like '%${userId}%'
+                </if>
+                <if test="userName != null and userName != '' ">
+                    and user_name like '%${userName}%'
+                </if>
+            </where>
+        </select>
 </mapper>

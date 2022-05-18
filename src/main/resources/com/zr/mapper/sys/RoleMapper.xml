@@ -123,5 +123,18 @@ select * from sys_role
     </if>
     </where>
   </select>
+  <select id="listByUserId" resultMap="BaseResultMap">
+    SELECT
+r.*
+   FROM
+sys_role r
+   LEFT JOIN sys_userrole ur ON r.id = ur.role_id
+   WHERE
+ur.user_id = #{userId}
+  </select>
+  <select id="selectList" resultMap="BaseResultMap">
+    select * from sys_role
+  </select>
+
 
 </mapper>

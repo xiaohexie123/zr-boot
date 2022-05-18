@@ -28,4 +28,10 @@
       </if>
     </trim>
   </insert>
+  <delete id="del" >
+    delete from sys_userrole where user_id = #{userId}
+  </delete>
+  <select id="list" resultType="com.zr.vo.sys.userRole">
+      select * from sys_userrole
+    </select>
 </mapper>

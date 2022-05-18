@@ -1,6 +1,8 @@
 package com.zr.service.sys.impl;
 
+import com.zr.mapper.sys.RoleMapper;
 import com.zr.mapper.sys.UserMapper;
+import com.zr.mapper.sys.userRoleMapper;
 import com.zr.service.sys.UserService;
 import com.zr.util.Md5Util;
 import com.zr.util.RedisUtils;
@@ -8,8 +10,10 @@ import com.zr.util.TokenUtil;
 import com.zr.vo.sys.User;
 import com.github.pagehelper.PageHelper;
 import com.mysql.jdbc.StringUtils;
+import com.zr.vo.sys.userRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
@@ -35,6 +39,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private RedisUtils redisUtils;
+
+    @Resource
+    private userRoleMapper userRoleMapper;
 
     /**
      * 登录逻辑
@@ -84,6 +91,7 @@ public class UserServiceImpl implements UserService {
      *
      * @param user
      */
+    @Transactional//加上事务
     @Override
     public void add(User user) {
         //获取当前登录用户账号
@@ -93,6 +101,14 @@ public class UserServiceImpl implements UserService {
         user.setPassword(Md5Util.EncoderByMd5(user.getPassword()));
         //默认为禁用状态
         user.setStatus("0");
+        if (user.getRoles()!=null){
+            for (Long roleId : user.getRoles()){
+                userRole userRole = new userRole();
+                userRole.setUserId(user.getUserId());
+                userRole.setRoleId(roleId);
+                userRoleMapper.insert(userRole);
+            }
+        }
         userMapper.insertSelective(user);
     }
 
@@ -101,11 +117,21 @@ public class UserServiceImpl implements UserService {
      *
      * @param user
      */
+    @Transactional//加上事务
     @Override
     public void edit(User user) {
         //如果存在密码，则修改密码
         if (!StringUtils.isNullOrEmpty(user.getPassword())) {
             user.setPassword(Md5Util.EncoderByMd5(user.getPassword()));
+        }
+        userRoleMapper.del(user.getUserId());
+        if (user.getRoles()!=null){
+            for (Long roleId : user.getRoles()){
+                userRole userRole = new userRole();
+                userRole.setUserId(user.getUserId());
+                userRole.setRoleId(roleId);
+                userRoleMapper.insert(userRole);
+            }
         }
         user.setModifyTime(new Date());
         //获取当前登录用户账号
@@ -191,8 +217,10 @@ public class UserServiceImpl implements UserService {
      *
      * @param userId
      */
+    @Transactional//加上事务
     @Override
     public void del(String userId) {
+        userRoleMapper.del(userId);
         userMapper.deleteByPrimaryKey(userId);
     }
 

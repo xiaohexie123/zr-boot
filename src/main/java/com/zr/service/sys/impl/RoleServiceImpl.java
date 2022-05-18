@@ -7,6 +7,7 @@ import com.zr.util.TokenUtil;
 import com.zr.vo.sys.Role;
 
 import com.zr.vo.sys.User;
+import com.zr.vo.sys.userRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -47,4 +48,11 @@ public class RoleServiceImpl  implements RoleService {
     public void del(Long id) {
         roleMapper.deleteByPrimaryKey(id);
     }
+
+    @Override
+    public List<Role> selectList() {
+        return roleMapper.selectList();
+    }
+
+
 }

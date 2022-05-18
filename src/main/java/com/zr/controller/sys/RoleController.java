@@ -6,6 +6,7 @@ import com.zr.service.sys.RoleService;
 import com.zr.util.AjaxResult;
 import com.zr.vo.sys.Role;
 import com.zr.vo.sys.User;
+import com.zr.vo.sys.userRole;
 import org.apache.ibatis.annotations.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,6 +34,18 @@ public class RoleController {
         PageInfo<Role> pageInfo = new PageInfo<>(roleList);
         return JSON.toJSONString(AjaxResult.success("查询成功",pageInfo));
     }
+
+    //获取所有角色
+    @RequestMapping("/selectList")
+    public String selectList(){
+        //条件查询所有角色
+        List<Role> roleList = roleService.selectList();
+        //封装到分页对象中
+        return JSON.toJSONString(AjaxResult.success("查询成功",roleList));
+    }
+
+
+
 
     @RequestMapping("/add")
     public String add(@RequestBody Map dataMap) {

@@ -31,6 +31,17 @@ public class User extends BaseVo implements Serializable {
     private List<Role> roleList;
 
 
+    private Long[] roles;
+
+
+    public Long[] getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Long[] roles) {
+        this.roles = roles;
+    }
+
     public List<Role> getRoleList() {
         return roleList;
     }
