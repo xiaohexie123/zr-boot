@@ -22,7 +22,7 @@
     from sys_auth
     where id = #{id,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from sys_auth
     where id = #{id,jdbcType=BIGINT}
   </delete>
@@ -149,4 +149,27 @@
       modify_time = #{modifyTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+  <resultMap id="RsResultMap" type="com.zr.vo.sys.Auth">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="seq" jdbcType="DECIMAL" property="seq" />
+    <result column="mark" jdbcType="VARCHAR" property="mark" />
+    <result column="pid" jdbcType="BIGINT" property="pid" />
+    <result column="create_id" jdbcType="VARCHAR" property="createId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="modify_id" jdbcType="VARCHAR" property="modifyId" />
+    <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+    <collection property="children" column="id" select="selectList" ofType="com.zr.vo.sys.Auth"></collection>
+  </resultMap>
+
+  <select id="list" resultMap="RsResultMap">
+      select * from  sys_auth where pid is null order by seq;
+    </select>
+  <select id="selectList" resultMap="BaseResultMap">
+    select * from sys_auth where pid = #{id}
+  </select>
+
+
 </mapper>

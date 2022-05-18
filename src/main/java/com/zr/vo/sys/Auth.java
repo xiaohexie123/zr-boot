@@ -1,7 +1,11 @@
 package com.zr.vo.sys;
 
-import java.util.Date;
+import com.alibaba.fastjson.annotation.JSONField;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.apache.ibatis.annotations.Mapper;
 
+import java.util.Date;
+import java.util.List;
 public class Auth {
     private Long id;
 
@@ -17,11 +21,26 @@ public class Auth {
 
     private String createId;
 
+    @JSONField(format="yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
     private String modifyId;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JSONField(format="yyyy-MM-dd HH:mm:ss")
     private Date modifyTime;
+
+    //树形菜单使用
+    private List<Auth> children;
+
+
+    public List<Auth> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<Auth> children) {
+        this.children = children;
+    }
 
     public Long getId() {
         return id;

@@ -1,7 +1,10 @@
 package com.zr.mapper.sys;
 
 import com.zr.vo.sys.Auth;
+import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+@Mapper
 public interface AuthMapper {
     int deleteByPrimaryKey(Long id);
 
@@ -14,4 +17,8 @@ public interface AuthMapper {
     int updateByPrimaryKeySelective(Auth record);
 
     int updateByPrimaryKey(Auth record);
+
+    List<Auth> list();
+
+    List<Auth> selectList();
 }
