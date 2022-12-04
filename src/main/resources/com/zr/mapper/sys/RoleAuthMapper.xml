@@ -28,4 +28,11 @@
       </if>
     </trim>
   </insert>
+  <delete id="delAllByAuthId">
+    delete from sys_roleauth where auth_id = #{authId}
+  </delete>
+
+  <select id="list" resultMap="BaseResultMap">
+      select * from sys_roleauth
+    </select>
 </mapper>

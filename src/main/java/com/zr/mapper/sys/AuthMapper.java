@@ -21,4 +21,6 @@ public interface AuthMapper {
     List<Auth> list();
 
     List<Auth> selectList();
+
+    List<Auth> listById()
 }

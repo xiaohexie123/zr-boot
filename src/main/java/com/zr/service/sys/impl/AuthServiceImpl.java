@@ -1,11 +1,13 @@
 package com.zr.service.sys.impl;
 
 import com.zr.mapper.sys.AuthMapper;
+import com.zr.mapper.sys.RoleAuthMapper;
 import com.zr.service.sys.AuthService;
 import com.zr.util.TokenUtil;
 import com.zr.vo.sys.Auth;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.Date;
@@ -19,6 +21,9 @@ public class AuthServiceImpl implements AuthService {
 
     @Autowired
     private TokenUtil tokenUtil;
+
+    @Resource
+    private RoleAuthMapper roleAuthMapper;
 
 
     @Override
@@ -40,8 +45,11 @@ public class AuthServiceImpl implements AuthService {
         return authMapper.updateByPrimaryKeySelective(auth);
     }
 
+    @Transactional
     @Override
     public int del(Long id) {
+        //删除角色权限表
+        roleAuthMapper.delAllByAuthId(id);
         return authMapper.deleteByPrimaryKey(id);
     }
 }

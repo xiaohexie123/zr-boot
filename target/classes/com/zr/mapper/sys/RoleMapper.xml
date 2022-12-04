@@ -24,15 +24,15 @@
     delete from sys_role
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.zr.vo.sys.Role">
-    insert into sys_role (id, name, mark, 
-      create_id, create_time, modify_id, 
+  <insert id="insert" parameterType="com.zr.vo.sys.Role" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+    insert into sys_role (id, name, mark,
+      create_id, create_time, modify_id,
       modify_time)
-    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{mark,jdbcType=VARCHAR}, 
-      #{createId,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{modifyId,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{mark,jdbcType=VARCHAR},
+      #{createId,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{modifyId,jdbcType=VARCHAR},
       #{modifyTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.zr.vo.sys.Role">
+  <insert id="insertSelective"  parameterType="com.zr.vo.sys.Role" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
     insert into sys_role
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -81,7 +81,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.zr.vo.sys.Role">
+  <update id="updateByPrimaryKeySelective" parameterType="com.zr.vo.sys.Role" >
     update sys_role
     <set>
       <if test="name != null">
@@ -115,14 +115,7 @@
       modify_time = #{modifyTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <select id="list" resultMap="BaseResultMap">
-select * from sys_role
-    <where>
-    <if test="name != null and name != '' ">
-       name like concat("%",#{name},"%")
-    </if>
-    </where>
-  </select>
+
   <select id="listByUserId" resultMap="BaseResultMap">
     SELECT
 r.*
@@ -134,6 +127,20 @@ ur.user_id = #{userId}
   </select>
   <select id="selectList" resultMap="BaseResultMap">
     select * from sys_role
+  </select>
+
+
+
+  <select id="list" resultMap="BaseResultMap">
+    select * from sys_role
+    <where>
+      <if test="name != null and name != '' ">
+        name like concat("%",#{name},"%")
+      </if>
+    </where>
+  </select>
+  <select id="selectByName" resultMap="BaseResultMap">
+    select id from sys_role where name = #{name}
   </select>
 
 

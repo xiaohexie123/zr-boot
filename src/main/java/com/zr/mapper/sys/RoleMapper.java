@@ -25,4 +25,6 @@ public interface RoleMapper {
 
 
     List<Role> selectList();
+
+    Long selectByName(Role r);
 }

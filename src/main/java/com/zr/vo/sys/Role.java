@@ -6,6 +6,7 @@ import com.github.pagehelper.PageHelper;
 import com.zr.vo.BaseVo;
 
 import java.util.Date;
+import java.util.List;
 
 public class Role extends BaseVo {
     private Long id;
@@ -24,6 +25,28 @@ public class Role extends BaseVo {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JSONField(format="yyyy-MM-dd HH:mm:ss")
     private Date modifyTime;
+    //拥有权限列表（新增修改）
+    private Long[] auths;
+
+    //拥有权限列表（显示）
+    private List<Auth> authList;
+
+    public Long[] getAuths() {
+        return auths;
+    }
+
+    public void setAuths(Long[] auths) {
+        this.auths = auths;
+    }
+
+
+    public List<Auth> getAuthList() {
+        return authList;
+    }
+
+    public void setAuthList(List<Auth> authList) {
+        this.authList = authList;
+    }
 
     public Long getId() {
         return id;
